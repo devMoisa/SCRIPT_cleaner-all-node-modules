@@ -1,16 +1,4 @@
-#!/bin/bash
+#! /usr/bin/env sh
+set -e
 
-function delete_node_modules {
-  for file in "$1"/*; do
-    if [[ -d "$file" ]]; then
-      if [[ "$file" == *"/node_modules" ]]; then
-        echo "Deletando $file"
-        rm -rf "$file"
-      else
-        delete_node_modules "$file"
-      fi
-    fi
-  done
-}
-
-delete_node_modules "$(pwd)"
+find "${1-"$(pwd)"}" -name 'node_modules' -type d -prune -exec rm -rf '{}' +
